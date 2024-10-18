@@ -5,6 +5,7 @@
 #include "tag25h9.h"
 #include "tag25h7.h"
 #include "tag16h5.h"
+#include "tagrmus.h"
 
 typedef struct apriltag_family* (*factory_func_t)();
 
@@ -20,6 +21,7 @@ static const struct apriltag_family_info lookup[] = {
   { "tag25h9", tag25h9_create },
   { "tag25h7", tag25h7_create },
   { "tag16h5", tag16h5_create },
+  { "tagrmus", tagrmus_create },
   { NULL, NULL }
 };
 
@@ -63,3 +65,4 @@ void apriltag_family_destroy(apriltag_family_t *tf) {
    free(tf);
    
 }
+

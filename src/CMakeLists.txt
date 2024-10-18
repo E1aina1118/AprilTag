@@ -1,6 +1,6 @@
 set(sources
   apriltag.c apriltag_quad_thresh.c tag16h5.c tag25h7.c tag25h9.c 
-  tag36h10.c tag36h11.c tag36artoolkit.c g2d.c apriltag_family.c
+  tag36h10.c tag36h11.c tag36artoolkit.c g2d.c apriltag_family.c tagrmus.c
   common/zarray.c common/zhash.c common/zmaxheap.c common/unionfind.c
   common/matd.c common/image_u8.c common/pnm.c common/image_f32.c
   common/image_u32.c common/workerpool.c common/time_util.c common/svd22.c 
@@ -33,3 +33,4 @@ target_link_libraries(pose_test apriltag ${CMAKE_THREAD_LIBS_INIT} m)
 install(TARGETS apriltag_demo DESTINATION bin)
 install(TARGETS maketags DESTINATION bin)
 install(TARGETS apriltag DESTINATION lib)
+

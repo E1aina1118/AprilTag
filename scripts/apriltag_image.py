@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from argparse import ArgumentParser
 import os
@@ -7,7 +7,7 @@ import apriltag
 
 ################################################################################
 
-def apriltag_image(input_images=['../media/input/single_tag.jpg', '../media/input/multiple_tags.jpg'],
+def apriltag_image(input_images=['/opt/AprilTag/media/input/IMG_1579.JPG','/opt/AprilTag/media/input/IMG_1580.JPG'],
                    output_images=False,
                    display_images=True,
                    detection_window_name='AprilTag',
@@ -22,9 +22,9 @@ def apriltag_image(input_images=['../media/input/single_tag.jpg', '../media/inpu
             detection_window_name [str]: Title of displayed (output) tag detection window
     '''
 
-    parser = ArgumentParser(description='Detect AprilTags from static images.')
-    apriltag.add_arguments(parser)
-    options = parser.parse_args()
+    # parser = ArgumentParser(description='Detect AprilTags from static images.')
+    # apriltag.add_arguments(parser)
+    # options = parser.parse_args()
 
     '''
     Set up a reasonable search path for the apriltag DLL.
@@ -32,11 +32,16 @@ def apriltag_image(input_images=['../media/input/single_tag.jpg', '../media/inpu
     location, or specify your own search paths as needed.
     '''
 
+    options = apriltag.DetectorOptions(families='tagrmus',quad_blur=5,debug=True)
+
     detector = apriltag.Detector(options, searchpath=apriltag._get_dll_path())
 
     for image in input_images:
 
         img = cv2.imread(image)
+        height, width = img.shape[:2]
+        new_size = (width // 4, height // 4)
+        img = cv2.resize(img, new_size)
 
         print('Reading {}...\n'.format(os.path.split(image)[1]))
 
@@ -50,7 +55,7 @@ def apriltag_image(input_images=['../media/input/single_tag.jpg', '../media/inpu
                                               )
 
         if output_images:
-            output_path = '../media/output/'+str(os.path.split(image)[1])
+            output_path = '/opt/AprilTag/medial/output/'+str(os.path.split(image)[1])
             output_path = output_path.replace(str(os.path.splitext(image)[1]), '.jpg')
             cv2.imwrite(output_path, overlay)
 
@@ -63,3 +68,4 @@ def apriltag_image(input_images=['../media/input/single_tag.jpg', '../media/inpu
 
 if __name__ == '__main__':
     apriltag_image()
+
